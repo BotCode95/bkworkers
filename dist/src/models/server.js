@@ -18,6 +18,9 @@ const connectionDB_1 = require("../db/connectionDB");
 const cors_1 = __importDefault(require("cors"));
 const workersRoutes_1 = __importDefault(require("../routes/workersRoutes"));
 const tagsRoutes_1 = __importDefault(require("../routes/tagsRoutes"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
+const swagger_config_1 = require("../../swagger.config");
 class Server {
     constructor() {
         this.path = {
@@ -26,6 +29,7 @@ class Server {
         };
         this.app = (0, express_1.default)();
         this.port = process.env.NODE_ENV === 'dev' ? process.env.PORT_DEVELOPMENT : process.env.PORT;
+        this.swaggerDocs = (0, swagger_jsdoc_1.default)(swagger_config_1.swaggerOptions);
         this.connectionDB();
         this.middlewares();
         this.routes();
@@ -42,6 +46,7 @@ class Server {
     routes() {
         this.app.use(this.path.workers, workersRoutes_1.default);
         this.app.use(this.path.tags, tagsRoutes_1.default);
+        this.app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(this.swaggerDocs));
     }
     listen() {
         this.app.listen(this.port, () => {
