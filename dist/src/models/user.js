@@ -11,15 +11,20 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Tag = void 0;
+exports.User = void 0;
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const mongoose_1 = require("mongoose");
-const TagSchema = new mongoose_1.Schema({
-    name: { type: String },
+const userSchema = new mongoose_1.Schema({
+    name: { type: String, required: false },
+    lastname: { type: String, required: false },
+    email: { type: String, required: false },
+    password: { type: String, required: false },
+    rol: { type: String, default: 'USER_ROLE', enum: ['ADMIN_ROLE', 'USER_ROLE'] },
+    status: { type: Boolean, default: true },
 });
-TagSchema.methods.toJSON = function () {
-    const _a = this.toObject(), { __v } = _a, tags = __rest(_a, ["__v"]);
-    return tags;
+userSchema.methods.toJSON = function () {
+    const _a = this.toObject(), { __v, password } = _a, user = __rest(_a, ["__v", "password"]);
+    return user;
 };
-exports.Tag = (0, mongoose_1.model)('Tag', TagSchema);
-//# sourceMappingURL=tag.js.map
+exports.User = (0, mongoose_1.model)('User', userSchema);
+//# sourceMappingURL=user.js.map

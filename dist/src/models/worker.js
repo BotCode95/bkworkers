@@ -12,6 +12,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Worker = void 0;
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const mongoose_1 = require("mongoose");
 const WorkerSchema = new mongoose_1.Schema({
     name: { type: String },
